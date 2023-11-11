@@ -17,7 +17,7 @@ const handleClickHome = () =>{
     const app = document.getElementById('app')
     app.innerHTML = ''
     label_nombre = document.createElement('label')
-    label_nombre.innerText = 'Nombre :'
+    label_nombre.innerText = 'Nombre de la mascota :'
     label_nombre.classList.add('label')
     label_nombre.for = 'nombre'
     app.appendChild(label_nombre)
@@ -35,24 +35,24 @@ const handleClickHome = () =>{
     var br = document.createElement('br')
     app.append(br)
     
-    const label_edad = document.createElement('label')
-    label_edad.innerText = 'Edad :'
-    label_edad.classList.add('label')
-    label_edad.for = 'edad'
-    app.appendChild(label_edad)
+    const label_tipo = document.createElement('label')
+    label_tipo.innerText = 'Tipo de Animal:'
+    label_tipo.classList.add('label')
+    label_tipo.for = 'tipo'
+    app.appendChild(label_tipo)
 
-    const input_edad = document.createElement('input')
-    input_edad.type = 'number'
-    input_edad.placeholder = 'Ingrese edad'
-    input_edad.id = 'edad'
-    input_edad.classList.add('form',"form-control")
-    input_edad.style.width = '200px'
-    input_edad.max="100"
-    input_edad.min="1"
-    input_edad.value = localStorage.getItem('edad')
-    input_edad.onchange= (e) => {handleKeyUpEdad(e)}
-    input_edad.step=1
-    app.appendChild(input_edad) 
+    const input_tipo = document.createElement('input')
+    input_tipo.type = 'text'
+    input_tipo.placeholder = 'Ingrese tipo de Animal'
+    input_tipo.id = 'tipo'
+    input_tipo.classList.add('form',"form-control")
+    input_tipo.style.width = '200px'
+    input_tipo.max="100"
+    input_tipo.min="1"
+    input_tipo.value = localStorage.getItem('tipo')
+    input_tipo.onchange= (e) => {handleKeyUptipo(e)}
+    input_tipo.step=1
+    app.appendChild(input_tipo) 
     
     br = document.createElement('br')
     app.append(br) 
@@ -71,8 +71,8 @@ const handleClickHome = () =>{
 const handleKeyUpNombre =  (e) =>{
      localStorage.setItem('nombre',e.target.value)
 }
-const handleKeyUpEdad =  (e) =>{
-    localStorage.setItem('edad',e.target.value)
+const handleKeyUptipo =  (e) =>{
+    localStorage.setItem('tipo',e.target.value)
 }
 const clearStorage = () =>{
     localStorage.clear()
@@ -96,24 +96,24 @@ const showTablaView = () =>{
     app.appendChild(input_nombre)
     var br = document.createElement('br')
     app.append(br) 
-    const label_edad = document.createElement('label')
-    label_edad.innerText = 'Edad :'
-    label_edad.classList.add('label')
-    label_edad.for = 'edad'
+    const label_tipo = document.createElement('label')
+    label_tipo.innerText = 'Tipo de animal :'
+    label_tipo.classList.add('label')
+    label_tipo.for = 'tipo'
 
-    app.appendChild(label_edad)
+    app.appendChild(label_tipo)
 
-    const input_edad = document.createElement('input')
-    input_edad.type = 'number'
-    input_edad.placeholder = 'Ingrese edad'
-    input_edad.id = 'edad'
-    input_edad.classList.add('form',"form-control")
-    input_edad.style.width = '200px'
-    input_edad.max="100"
-    input_edad.min="1"
-    input_edad.step=1
+    const input_tipo = document.createElement('input')
+    input_tipo.type = 'text'
+    input_tipo.placeholder = 'Ingrese tipo'
+    input_tipo.id = 'tipo'
+    input_tipo.classList.add('form',"form-control")
+    input_tipo.style.width = '200px'
+    input_tipo.max="100"
+    input_tipo.min="1"
+    input_tipo.step=1
  
-    app.appendChild(input_edad) 
+    app.appendChild(input_tipo) 
     br = document.createElement('br')
     app.append(br) 
     const button = document.createElement('button')
@@ -136,7 +136,7 @@ const showTablaView = () =>{
     titCol2.innerText = "Nombre"
     const titCol3 = document.createElement('th')
     titCol3.scope = 'col'
-    titCol3.innerText = "Edad"
+    titCol3.innerText = "tipo"
     const titCol4 = document.createElement('th')
     titCol4.scope = 'col'
     titCol4.innerText = "Eliminar"
@@ -152,12 +152,12 @@ const showTablaView = () =>{
 }
 const agregarRegistro = (e) =>{
   const nombre = document.getElementById('nombre').value
-  const edad = document.getElementById('edad').value
-  if(nombre == '' || edad == ''){
-    alert('Nombre y edad son requeridos')
+  const tipo = document.getElementById('tipo').value
+  if(nombre == '' || tipo == ''){
+    alert('Nombre y tipo son requeridos')
     return
   }
-  const registro = {nombre,edad}
+  const registro = {nombre,tipo}
   const data = JSON.parse(localStorage.getItem('data'))||[]
   data.push(registro)
   localStorage.setItem('data',JSON.stringify(data))
@@ -165,7 +165,7 @@ const agregarRegistro = (e) =>{
   tbody.parentNode.removeChild(tbody)
   llenarTabla(data)
   document.getElementById('nombre').value = ''
-  document.getElementById('edad').value = ''
+  document.getElementById('tipo').value = ''
 }
 const llenarTabla= (data) =>{
   const tabla = document.getElementById("personas")
@@ -181,7 +181,7 @@ const llenarTabla= (data) =>{
     td.innerHTML = persona.nombre
     tr.appendChild(td)
     td = document.createElement('td')
-    td.innerHTML = persona.edad
+    td.innerHTML = persona.tipo
     tr.appendChild(td)
     td = document.createElement('td')
     btnBorrar = document.createElement('button')
@@ -218,25 +218,24 @@ const borrarRegistro = (e) =>{
   llenarTabla(JSON.parse(localStorage.getItem('data')))
 
 }
-
 const editarRegistro = (e,persona) =>{
   console.log(persona)
   console.log(e.target.name)
   const edit_nombre = document.getElementById('edit_nombre')
-  const edit_edad = document.getElementById('edit_edad')
+  const edit_tipo = document.getElementById('edit_tipo')
   const numero_registro = document.getElementById('numero_registro')
   edit_nombre.value = persona.nombre
-  edit_edad.value = persona.edad
+  edit_tipo.value = persona.tipo
   numero_registro.value = e.target.name
 
 }
 const guardarRegistro = async () =>{
   const numero_registro = document.getElementById('numero_registro').value
   const edit_nombre = document.getElementById('edit_nombre').value
-  const edit_edad = document.getElementById('edit_edad').value
+  const edit_tipo = document.getElementById('edit_tipo').value
   var data = JSON.parse(localStorage.getItem('data'))
   data[numero_registro].nombre = edit_nombre
-  data[numero_registro].edad = edit_edad
+  data[numero_registro].tipo = edit_tipo
   localStorage.setItem('data',JSON.stringify(data))
   const tbody = document.getElementById("datos_personas")
   tbody.parentNode.removeChild(tbody)

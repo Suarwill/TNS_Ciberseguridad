@@ -172,6 +172,7 @@ const agregarRegistro = (e) =>{
   document.getElementById('dueño').value = ''
   document.getElementById('telefono').value = ''
 }
+/*Revisado por William*/
 const llenarTabla= (data) =>{
   const tabla = document.getElementById("mascotas")
   const tbody = document.createElement('tbody')
@@ -225,7 +226,6 @@ const borrarRegistro = (e) =>{
   const tbody = document.getElementById("datos_mascotas")
   tbody.parentNode.removeChild(tbody)
   llenarTabla(JSON.parse(localStorage.getItem('data')))
-
 }
 const editarRegistro = (e,mascota) =>{
   console.log(mascota)

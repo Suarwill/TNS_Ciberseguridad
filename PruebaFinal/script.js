@@ -146,7 +146,9 @@ const realizarSorteo = async () =>{
     else{
         a++
     }}
+    console.log("Cantidad de aciertos: ",aciertos)
 
+    // Deduciendo a que premio es Acreedor (de forma ficticia)
     if (aciertos === 6 ){
         console.log ("Ha ganado, acertó 6 numeros")
         alert("Usted es el GANADOR de Loto!!!")

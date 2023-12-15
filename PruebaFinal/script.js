@@ -1,40 +1,83 @@
 window.onload = () =>{
-    showOpenai()
+    sorteoLoto()
 }
-const showOpenai = () =>{
+const sorteoLoto = () =>{
     app = document.getElementById('app')
     app.innerHTML = ''
-        label_prompt = document.createElement('label')
-        label_prompt.classList.add('label')
-        label_prompt.for = 'prompt'
+        label_sorteo = document.createElement('label')
+        label_sorteo.classList.add('label')
+        label_sorteo.for = 'sorteo'
 
-    // Creando área para ingresar la frase a traducir
-    const sol_prompt = document.createElement('textarea')
-        sol_prompt.placeholder = 'Ingrese la frase a traducir:'
-        sol_prompt.id = 'prompt'
-        sol_prompt.classList.add('form-control')
-        sol_prompt.style.height= '300px'
-        sol_prompt.style.width= '500px'
-        sol_prompt.style.backgroundImage = 'linear-gradient(180deg, #adffff 0, #a4ffff 25%, #9df2f2 50%, #97dade 75%, #92c5cb 100%)'
-        app.appendChild(sol_prompt)
-    var br = document.createElement('br')
-    app.append(br)
+    //Numeros a Elegir
+    const nums = ["01","02","03","04","05","06","07","08","09","10",
+                "11","12","13","14","15","16","17","18","19","20",
+                "21","22","23","24","25","26","27","28","29","30",
+                "31","32","33","34","35","36","37","38","39","40",
+                "41","42"]
 
     //Creando el Opcional de Idioma a traducir
-    const sl_idioma = document.createElement('select')
-        sl_idioma.id = 'idioma'
-        sl_idioma.classList.add('form-control')
-        sl_idioma.style.width= '200px'
-        idiomas = ["Inglés",    "Chino Mandarín",   "Portugués",
-                    "Italiano", "Bengalí",          "Frances",
-                    "Ruso",     "Japonés",          "Turco",
-                    "Árabe",    "Hindú",            "Danés"]
-        idiomas.forEach(idioma => {
-        opt = document.createElement('option')
-        opt.innerText= idioma
-        sl_idioma.appendChild(opt)
+    const n1 = document.createElement('select')
+        n1.id = 'opcion1'
+        n1.classList.add('form-control')
+        n1.style.width= '50px'
+    const n2 = document.createElement('select')
+        n2.id = 'opcion2'
+        n2.classList.add('form-control')
+        n2.style.width= '50px'
+    const n3 = document.createElement('select')
+        n3.id = 'opcion3'
+        n3.classList.add('form-control')
+        n3.style.width= '50px'
+    const n4 = document.createElement('select')
+        n4.id = 'opcion4'
+        n4.classList.add('form-control')
+        n4.style.width= '50px'
+    const n5 = document.createElement('select')
+        n5.id = 'opcion5'
+        n5.classList.add('form-control')
+        n5.style.width= '50px'
+    const n6 = document.createElement('select')
+        n6.id = 'opcion6'
+        n6.classList.add('form-control')
+        n6.style.width= '50px'
+
+        nums.forEach(num => {
+            opt = document.createElement('option')
+            opt.innerText= num
+            n1.appendChild(opt)
         });
-        app.appendChild(sl_idioma)
+        nums.forEach(num => {
+            opt = document.createElement('option')
+            opt.innerText= num
+            n2.appendChild(opt)
+        });
+        nums.forEach(num => {
+            opt = document.createElement('option')
+            opt.innerText= num
+            n3.appendChild(opt)
+        });
+        nums.forEach(num => {
+            opt = document.createElement('option')
+            opt.innerText= num
+            n4.appendChild(opt)
+        });
+        nums.forEach(num => {
+            opt = document.createElement('option')
+            opt.innerText= num
+            n5.appendChild(opt)
+        });
+        nums.forEach(num => {
+            opt = document.createElement('option')
+            opt.innerText= num
+            n6.appendChild(opt)
+        });
+        app.appendChild(n1)
+        app.appendChild(n2)
+        app.appendChild(n3)
+        app.appendChild(n4)
+        app.appendChild(n5)
+        app.appendChild(n6)
+    br = document.createElement('br')
         app.append(br)
 
     // Creando Boton, se agrego un fondo de color degradado
@@ -53,59 +96,79 @@ const showOpenai = () =>{
 const realizarSorteo = async () =>{
     app = document.getElementById('app')
         console.log("Realizando Sorteo Ficticio")
+        const elegidos = [
+            document.getElementById('opcion1').value,
+            document.getElementById('opcion2').value,
+            document.getElementById('opcion3').value,
+            document.getElementById('opcion4').value,
+            document.getElementById('opcion5').value,
+            document.getElementById('opcion6').value
+        ]
+        const userEleccion = elegidos.map(num => parseInt(num, 10))
 
-    // Estructura de la solicitud A OPENAI
-    const prompt = document.getElementById('prompt').value
-    const idiomaTraducir = document.getElementById('idioma').value
-    const solicitud = `" ${prompt} " traduce lo anterior dicho al siguiente idioma: "${idiomaTraducir}" `
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `${bearer}`
-        },
-        body: JSON.stringify({
-            "model": "gpt-3.5-turbo",
-            "messages": [{"role": "user", "content": solicitud}],
-        // Temperature: Rango entre 0 y 2 (mas alto es mas random)
-            "temperature": 0.4               
-        })
-    };
+    // Ordenando eleccion de Usuario
+        userEleccion.sort((a,b) => a-b)
+        console.log("El usuario a elegido los siguientes numeros: ")
+        console.log(userEleccion)
 
-    // Configurando JSON
-    try {
-        const response = await fetch(url, requestOptions);
-        const data = await response.json();
-        try{
-            miData = JSON.parse(data.choices[0].message.content)
-            console.log(miData)
-        }catch(e){}
-        divCard = document.createElement('div')
-            divCard.classList.add('card')
-        divHeader = document.createElement('div')
-            divHeader.classList.add('card-header')
-            divHeader.innerText = prompt
-            divHeader.style.paddingLeft="50px"
-        divBody = document.createElement('div')
-        h5 = document.createElement('h6')
-            h5.classList.add('card-title')
-            h5.innerText = "La traducción es la siguiente:"
-            h5.style.padding = "20px"
-        parrafo = document.createElement('p')
-            parrafo.classList.add("card-text")
-            parrafo.innerHTML = data.choices[0].message.content
-            parrafo.style.padding = "10px"
-        divBody.appendChild(h5)
-        divBody.appendChild(parrafo)
-        divCard.appendChild(divHeader)
-        divCard.appendChild(divBody)
-        app.appendChild(divCard)
-        br = document.createElement('br')
-            app.appendChild(br)
-        textPrompt = document.getElementById('prompt')
-            textPrompt.value = ''
-    } catch (error) {
-        console.error('Error:', error);
-        return 'Error occurred while fetching data';
+    // Buscando que no haya repeticiones
+        var u = 0
+        while (u !== 6){
+        if (u > 0 && userEleccion[u] == userEleccion[u - 1]){
+            alert("Ha elegido un numero de forma repetida, favor elija números diferentes entre si")
+            u++}
+        else {
+            u++
+        }}
+
+    // Realizando Sorteo y comparando
+    var azarSorteo = []
+    var i = 0
+    while (i !== 6){
+        azarSorteo[i] = parseInt((Math.random()*41)+1)
+        if (i > 0 && azarSorteo[i] === azarSorteo[i - 1]){
+        continue}
+        else {
+            i++
+        }
     }
-}
+    azarSorteo.sort((a,b) => a-b)
+    console.log(azarSorteo)
+
+    // Comparando y Mostrando resultado
+    var aciertos = 0
+    var a = 0
+    while (a !== 6){
+    if (azarSorteo[a] === userEleccion[a]){
+        aciertos++
+        a++
+    }
+    else{
+        a++
+    }}
+
+    if (aciertos === 6 ){
+        console.log ("Ha ganado, acertó 6 numeros")
+        alert("Usted es el GANADOR de Loto!!!")
+        }
+    if (aciertos === 5 ){
+        console.log ("QUINA, acertó 5 numeros")
+        alert("Usted es ganó con QUINA")
+        }
+    if (aciertos === 4 ){
+        console.log ("CUATERNA, acertó 4 numeros")
+        alert("Usted es ganó con CUATERNA")
+        }  
+    if (aciertos === 4 ){
+        console.log ("CUATERNA, acertó 4 numeros")
+        alert("Usted es ganó con CUATERNA")
+        }
+    if (aciertos === 3 ){
+        console.log ("TERNA, acertó 3 numeros")
+        alert("Usted es ganó con TERNA")
+        }          
+    else{
+        console.log("No ha ganado")
+        alert("Lamentablemente no ha ganado")
+        }
+    }
